@@ -1,12 +1,18 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-
+import { Component, inject } from '@angular/core';
+import { StudentService } from './services/student';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  standalone: true,
+  imports: [],
+  templateUrl: './app.html'
 })
 export class App {
-  protected readonly title = signal('prac9');
+  private studentService = inject(StudentService);
+  students: any[] = [];
+
+  loadStudents() {
+    this.studentService.getStudents().subscribe((data: any) => {
+      this.students = data;
+    });
+  }
 }
